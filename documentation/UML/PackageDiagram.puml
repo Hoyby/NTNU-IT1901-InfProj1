@@ -1,0 +1,44 @@
+@startuml
+
+
+title Ajour Package Diagram
+
+
+package "core" {
+    component ajour.core
+
+    component ajour.json
+
+
+}
+
+package "fxgui" {
+    component ajour.ui
+
+}
+
+component "jackson" {
+}
+
+component "javafx" {
+}
+
+
+package "restserver" {
+    component ajour.restserver
+}
+
+component "spring boot" as SpringBoot {
+}
+
+
+
+ajour.ui ..> javafx
+ajour.ui ..> ajour.core
+ajour.ui ..> ajour.json
+ajour.json ..> jackson
+ajour.restserver ..> ajour.core
+ajour.restserver ..> ajour.json
+ajour.restserver ..> SpringBoot
+
+@enduml

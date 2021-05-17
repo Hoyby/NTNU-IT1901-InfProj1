@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="trackerGraph" layoutY="260.0" prefHeight="233.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ajour.ui.TrackerGraphController">
+    <Button fx:id="selectToday" layoutX="179.0" layoutY="1.0" mnemonicParsing="false" onAction="#plotLine" prefHeight="27.0" prefWidth="91.0" text="Today" />
+    <Button fx:id="selectLastSeven" layoutX="277.0" layoutY="1.0" mnemonicParsing="false" onAction="#plotLine" prefHeight="27.0" prefWidth="91.0" text="Last 7 days" />
+    <Button fx:id="selectLastThirty" layoutX="376.0" layoutY="1.0" mnemonicParsing="false" onAction="#plotLine" prefHeight="27.0" prefWidth="91.0" text="Last 30 days" />
+    <Pane fx:id="graphPane" layoutX="41.0" layoutY="29.0" prefHeight="190.0" prefWidth="564.0" />
+</Pane>

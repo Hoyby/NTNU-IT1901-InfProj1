@@ -1,0 +1,116 @@
+@startuml
+
+
+title Ajour Sequence Diagram
+
+skinparam Sequence {
+ BoxBorderColor #d1d1d1
+}
+
+autonumber
+Actor you
+box "GUI" #f0ede6
+you -> GUI : "adds entry"
+
+GUI -> TrackerOverviewController : addEntryButton *pushed*
+
+activate TrackerOverviewController
+
+end box
+box "Core" #ffffff
+TrackerOverviewController -> Tracker : addEntry()
+activate TrackerOverviewController
+activate Tracker
+
+
+Tracker -> Tracker : addEntry()
+activate Tracker
+
+
+Tracker -> TrackerEntry : <<create>>()
+activate TrackerEntry
+
+TrackerEntry -> Tracker
+deactivate TrackerEntry
+
+
+Tracker -> Tracker : notifyListeners()
+activate Tracker
+
+
+Tracker -> TrackerListener : trackerChanged()
+activate TrackerListener
+deactivate Tracker
+deactivate Tracker
+deactivate Tracker
+
+end box
+box "GUI" #f0ede6
+
+TrackerListener -> RemoteTrackerContainerAccess : putTracker()
+activate RemoteTrackerContainerAccess
+activate TrackerListener
+
+end box
+box "RestServer" #ffffff
+
+RemoteTrackerContainerAccess -> RestServerController : HTTP PUT /ajour/tracker
+activate RestServerController
+activate RemoteTrackerContainerAccess
+
+
+RestServerController -> RestServerService : deleteTracker()
+activate RestServerController
+activate RestServerService
+
+RestServerService -> RestServerService : deleteTracker()
+
+RestServerController -> RestServerService : addTracker()
+activate RestServerService
+
+
+RestServerService -> RestServerController : true
+deactivate RestServerService
+deactivate RestServerController
+
+RestServerController -> RestServerService : saveContainer()
+activate RestServerController
+RestServerService -> RestServerPersistence : saveTrackerContainer()
+activate RestServerPersistence
+activate RestServerService
+
+
+RestServerPersistence -> RestServerPersistence : saveContainerToFile()
+RestServerPersistence -> RestServerService : true
+deactivate RestServerPersistence
+deactivate RestServerService
+
+
+RestServerService -> RestServerController : true
+deactivate RestServerController
+deactivate RestServerService
+
+
+RestServerController -> RemoteTrackerContainerAccess : HTTP 200 true
+deactivate RemoteTrackerContainerAccess
+deactivate RestServerController
+
+
+RemoteTrackerContainerAccess -> TrackerListener : void
+deactivate TrackerListener
+deactivate RemoteTrackerContainerAccess
+
+TrackerListener -> TrackerOverviewController : updateOverview()
+deactivate TrackerListener
+deactivate TrackerOverviewController
+
+
+TrackerOverviewController -> GUI: updateOverview()
+deactivate TrackerOverviewController
+
+GUI -> you : Done
+
+
+
+
+@enduml

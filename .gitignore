@@ -1,0 +1,15 @@
+bin/
+target/
+.idea/
+ajour/ajour.iml
+ajour/parent.iml
+savedata.dat
+savedata.json
+/ajour/fxgui/fxgui.iml
+/ajour/core/core.iml
+/ajour/restserver/restserver.iml
+/ajour/fxgui/testSaveData.json
+/ajour/fxgui/testDefaultTrackers.json
+lib/
+/ajour/integrationtests/integrationtests.iml
+/ajour/integrationtests/testSaveData.json

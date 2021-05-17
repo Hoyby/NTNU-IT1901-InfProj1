@@ -1,0 +1,10 @@
+image:
+  file: .gitpod.dockerfile
+
+tasks:
+  - init: sdk use java 14.0.2.j9-adpt
+    command: cd ajour
+
+ports:
+  # used by virtual desktop and vnc, supports JavaFX
+  - port: 6080

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="540.0" prefWidth="880.0" style="-fx-background-color: #1D2026;"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ajour.ui.TrackerListViewController">
+    <Button fx:id="addTrackerButton" layoutX="28.0" layoutY="427.0" mnemonicParsing="false" onMouseClicked="#addTracker"
+            prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: #66ff66;" text="Add new"/>
+    <Button fx:id="removeTrackerButton" layoutX="110.0" layoutY="427.0" mnemonicParsing="false"
+            onMouseClicked="#removeSelectedTracker" prefHeight="27.0" prefWidth="70.0"
+            style="-fx-background-color: #ff4d4d; -fx-text-fill: white;" text="Delete"/>
+    <TextField fx:id="addTrackerName" layoutX="27.0" layoutY="389.0" prefHeight="27.0" prefWidth="165.0"
+               promptText="Name"/>
+    <ListView fx:id="trackerListView" layoutX="28.0" layoutY="178.0" prefHeight="200.0" prefWidth="165.0"
+              style="-fx-background-color: transparent;"/>
+    <Separator layoutX="21.0" layoutY="178.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="5.0"/>
+    <ImageView fitHeight="100.0" fitWidth="135.0" layoutX="30.0" layoutY="15.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../images/Ajour_logo.png"/>
+    </ImageView>
+    <AnchorPane layoutX="226.0" prefHeight="540.0" prefWidth="654.0" style="-fx-background-color: lightgray;">
+        <fx:include fx:id="overview" source="TrackerOverview.fxml"/>
+        <fx:include fx:id="graph" source="TrackerGraph.fxml"/>
+        <fx:include fx:id="clock" source="Clock.fxml"/>
+        <Text fx:id="errorDialogue" fill="RED" layoutY="530.0" AnchorPane.leftAnchor="10.0">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Text>
+    </AnchorPane>
+</AnchorPane>

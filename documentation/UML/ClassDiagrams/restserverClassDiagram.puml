@@ -1,0 +1,50 @@
+@startuml
+
+title __RESTSERVER Class Diagram__\n
+
+package "ajour.restserver" {
+    namespace ajour.restserver {
+        class ajour.restserver.RestServerApplication {
+            + javaTimeModule()
+            {static} + main()
+            + trackerModule()
+        }
+    }
+    namespace ajour.restserver {
+    class ajour.restserver.RestServerController {
+        {static} + TRACKER_CONTAINER_SERVICE_PATH : String
+            + deleteTracker()
+            + getTracker()
+            + getTrackerContainer()
+            + putTracker()
+            - checkTracker()
+            - decodeName()
+        }
+    }
+    namespace ajour.restserver {
+        class ajour.restserver.RestServerPersistence {
+            - environment : Environment
+            - savePath : Path
+            + setEnvironment()
+            # createNewFile()
+            # getContainerFromFile()
+            # saveContainerToFile()
+            - init()
+        }
+    }
+    namespace ajour.restserver {
+        class ajour.restserver.RestServerService {
+            # getTrackerContainer()
+            # saveTrackerContainer()
+            - init()
+        }
+    }
+
+    ajour.restserver.RestServerController o-- ajour.restserver.RestServerService : restServerService
+    ajour.restserver.RestServerPersistence .up.|> org.springframework.context.EnvironmentAware
+    ajour.restserver.RestServerService o-- ajour.restserver.RestServerPersistence : restServerPersistence
+    ajour.restserver.RestServerService o-- ajour.core.TrackerContainer : trackerContainer
+
+}
+
+@enduml

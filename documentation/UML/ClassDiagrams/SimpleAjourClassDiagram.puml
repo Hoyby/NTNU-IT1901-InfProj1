@@ -1,0 +1,125 @@
+@startuml
+
+title Ajour Class Diagram
+
+'Classes'
+package "ajour.core" {
+    namespace ajour.core {
+        class ajour.core.Tracker {
+        }
+    }
+    namespace ajour.core {
+        class ajour.core.TrackerContainer {
+        }
+    }
+    namespace ajour.core {
+        class ajour.core.TrackerEntry {
+        }
+    }
+    namespace ajour.core {
+        interface ajour.core.TrackerListener {
+        }
+    }
+
+
+    namespace ajour.core.utility {
+        class ajour.core.utility.EntrySummer {
+        }
+    }
+
+  ajour.core.Tracker .up.|> java.lang.Iterable
+  ajour.core.TrackerContainer .up.|> java.lang.Iterable
+}
+
+
+
+
+
+
+
+
+
+package "ajour.fxgui" {
+    namespace ajour.fxgui {
+        class ajour.fxgui.AjourApp {
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.AjourAppController {
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.ClockController {
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.Configuration {
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.LocalTrackerContainerAccess {
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.RemoteTrackerContainerAccess {
+        }
+    }
+    namespace ajour.fxgui {
+        interface ajour.fxgui.TrackerContainerAccess {
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.TrackerGraphController {
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.TrackerListViewController {
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.TrackerOverviewController {
+        }
+    }
+
+    ajour.fxgui.AjourApp -up-|> javafx.application.Application
+    ajour.fxgui.AjourAppController o-- ajour.fxgui.TrackerListViewController : listViewController
+    ajour.fxgui.LocalTrackerContainerAccess .up.|> ajour.fxgui.TrackerContainerAccess
+    ajour.fxgui.LocalTrackerContainerAccess o-- ajour.core.TrackerContainer : trackerContainer
+    ajour.fxgui.RemoteTrackerContainerAccess .up.|> ajour.fxgui.TrackerContainerAccess
+    ajour.fxgui.RemoteTrackerContainerAccess o-- ajour.core.TrackerContainer : trackerContainer
+    ajour.fxgui.TrackerGraphController o-- ajour.core.Tracker : selectedTracker
+    ajour.fxgui.TrackerListViewController o-- ajour.fxgui.TrackerGraphController : graphController
+    ajour.fxgui.TrackerListViewController o-- ajour.fxgui.TrackerOverviewController : overviewController
+    ajour.fxgui.TrackerListViewController o-- ajour.fxgui.TrackerContainerAccess : trackerContainerAccess
+    ajour.fxgui.TrackerOverviewController o-- ajour.core.Tracker : selectedTracker
+    ajour.fxgui.TrackerOverviewController o-- ajour.core.TrackerListener : trackerListener
+
+}
+
+
+
+
+package "ajour.restserver" {
+    namespace ajour.restserver {
+        class ajour.restserver.RestServerApplication {
+        }
+    }
+    namespace ajour.restserver {
+    class ajour.restserver.RestServerController {
+        }
+    }
+    namespace ajour.restserver {
+        class ajour.restserver.RestServerPersistence {
+        }
+    }
+    namespace ajour.restserver {
+        class ajour.restserver.RestServerService {
+        }
+    }
+
+    ajour.restserver.RestServerController o-- ajour.restserver.RestServerService : restServerService
+    ajour.restserver.RestServerService o-- ajour.restserver.RestServerPersistence : restServerPersistence
+    ajour.restserver.RestServerService o-- ajour.core.TrackerContainer : trackerContainer
+}
+
+@enduml

@@ -1,0 +1,143 @@
+@startuml
+
+title __CORE Class Diagram__\n
+
+package "ajour.core" {
+    namespace ajour.core {
+        class ajour.core.Tracker {
+            - entries : List<TrackerEntry>
+            - listeners : Collection<TrackerListener>
+            - name : String
+            + Tracker()
+            + addEntry()
+            + addEntry()
+            + addListener()
+            + getEntries()
+            + getName()
+            + isEmpty()
+            + iterator()
+            + removeListener()
+            + sumEntries()
+            + toString()
+            # notifyListeners()
+        }
+    }
+    namespace ajour.core {
+        class ajour.core.TrackerContainer {
+            - trackers : List<Tracker>
+            + TrackerContainer()
+            + TrackerContainer()
+            + addTracker()
+            + containsTracker()
+            + getTracker()
+            + getTrackers()
+            + iterator()
+            + removeTracker()
+            + toString()
+            - getOptionalTracker()
+            - removeTracker()
+        }
+    }
+    namespace ajour.core {
+        class ajour.core.TrackerEntry {
+            - timestamp : Instant
+            - value : int
+            + TrackerEntry()
+            + TrackerEntry()
+            + getTimeStamp()
+            + getValue()
+            + toString()
+        }
+    }
+    namespace ajour.core {
+        interface ajour.core.TrackerListener {
+        {abstract} + trackerChanged()
+        }
+    }
+
+
+    namespace ajour.core.utility {
+        class ajour.core.utility.EntrySummer {
+            {static} + lastWeek : Predicate<TrackerEntry>
+            {static} + today : Predicate<TrackerEntry>
+            {static} + yesterday : Predicate<TrackerEntry>
+            {static} + entrySum()
+            {static} + getEntriesFromPred()
+            {static} - lastWeekMidnight()
+            {static} - midnightInstant()
+            {static} - yesterdayMidnight()
+        }
+    }
+
+  ajour.core.Tracker .up.|> java.lang.Iterable
+  ajour.core.TrackerContainer .up.|> java.lang.Iterable
+}
+
+
+
+
+
+
+package "ajour.json" {
+    namespace ajour.json {
+        class ajour.json.TrackerContainerDeserializer {
+            + deserialize()
+        }
+    }
+    namespace ajour.json {
+        class ajour.json.TrackerContainerSerializer {
+            + serialize()
+        }
+    }
+    namespace ajour.json {
+        class ajour.json.TrackerDeserializer {
+            + deserialize()
+            + deserialize()
+        }
+    }
+    namespace ajour.json {
+        class ajour.json.TrackerEntryDeserializer {
+            + deserialize()
+            + deserialize()
+        }
+    }
+    namespace ajour.json {
+        class ajour.json.TrackerEntrySerializer {
+            + serialize()
+        }
+    }
+    namespace ajour.json {
+        class ajour.json.TrackerJson {
+            - mapper : ObjectMapper
+            + TrackerJson()
+            + loadObject()
+            + saveObject()
+        }
+    }
+    namespace ajour.json {
+        class ajour.json.TrackerModule {
+            {static} - NAME : String
+            + TrackerModule()
+            + TrackerModule()
+        }
+    }
+    namespace ajour.json {
+        class ajour.json.TrackerSerializer {
+            + serialize()
+        }
+    }
+
+
+    ajour.json.TrackerContainerDeserializer -up-|> com.fasterxml.jackson.databind.JsonDeserializer
+    ajour.json.TrackerContainerDeserializer o-- ajour.json.TrackerDeserializer : trackerDeserializer
+    ajour.json.TrackerContainerSerializer -up-|> com.fasterxml.jackson.databind.JsonSerializer
+    ajour.json.TrackerDeserializer -up-|> com.fasterxml.jackson.databind.JsonDeserializer
+    ajour.json.TrackerDeserializer o-- ajour.json.TrackerEntryDeserializer : trackerEntryDeserializer
+    ajour.json.TrackerEntryDeserializer -up-|> com.fasterxml.jackson.databind.JsonDeserializer
+    ajour.json.TrackerEntrySerializer -up-|> com.fasterxml.jackson.databind.JsonSerializer
+    ajour.json.TrackerModule -up-|> com.fasterxml.jackson.databind.module.SimpleModule
+    ajour.json.TrackerSerializer -up-|> com.fasterxml.jackson.databind.JsonSerializer
+
+    }
+
+@enduml

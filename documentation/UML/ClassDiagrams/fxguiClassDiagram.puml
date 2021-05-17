@@ -1,0 +1,148 @@
+@startuml
+
+title __FXGUI Class Diagram__\n
+
+package "ajour.fxgui" {
+    namespace ajour.fxgui {
+        class ajour.fxgui.AjourApp {
+            {static} + main()
+            + start()
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.AjourAppController {
+            ~ initialize()
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.ClockController {
+            ~ appClock : Text
+            + clock()
+            ~ initialize()
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.Configuration {
+            - properties : Properties
+            + Configuration()
+            + getProperty()
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.LocalTrackerContainerAccess {
+            - savePath : Path
+            + LocalTrackerContainerAccess()
+            + addTracker()
+            + getTracker()
+            + getTrackerNames()
+            + hasTracker()
+            + removeTracker()
+            + trackerChanged()
+            - loadFromFile()
+            - newFileCreated()
+            - saveToFile()
+            - setTrackerContainer()
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.RemoteTrackerContainerAccess {
+            - objectMapper : ObjectMapper
+            - serverUri : URI
+            + RemoteTrackerContainerAccess()
+            + addTracker()
+            + getTracker()
+            + getTrackerNames()
+            + hasTracker()
+            + removeTracker()
+            + trackerChanged()
+            - getTrackerContainer()
+            - putTracker()
+            - trackerUri()
+        }
+    }
+    namespace ajour.fxgui {
+        interface ajour.fxgui.TrackerContainerAccess {
+            {abstract} + addTracker()
+            {abstract} + getTracker()
+            {abstract} + getTrackerNames()
+            {abstract} + hasTracker()
+            {abstract} + removeTracker()
+            {abstract} + trackerChanged()
+        }
+    }
+    namespace ajour.fxgui {
+            class ajour.fxgui.TrackerGraphController {
+                ~ graphPane : Pane
+                ~ selectToday : Button
+                ~ selectLastSeven : Button
+                ~ selectLastThirty : Button
+                ~ trackerGraph : Pane
+                - map : HashMap<Integer, Integer>
+                - selectedTracker : Tracker
+                - timezone : String
+
+                + plotLine()
+                + setSelectedTracker()
+                - drawGraph()
+                - createMap()
+                - getData()
+                - createSeries()
+                ~ initialize()
+            }
+        }
+    namespace ajour.fxgui {
+        class ajour.fxgui.TrackerListViewController {
+            ~ addTrackerButton : Button
+            ~ addTrackerName : TextField
+            ~ errorDialogue : TextField
+            ~ removeTrackerButton : Button
+            ~ trackerListView : ListView<String>
+            - listViewListener : InvalidationListener
+            - observableContainer : ObservableList<String>
+            # setTrackerDataAccess()
+            ~ getSelectedTracker()
+            ~ initialize()
+            ~ removeSelectedTracker()
+            ~ updateTrackerListView()
+            - addTracker()
+            - selectFirstTracker()
+            - selectOnDeletion()
+            - setupListViewListener()
+        }
+    }
+    namespace ajour.fxgui {
+        class ajour.fxgui.TrackerOverviewController {
+            ~ addEntryButton : Button
+            ~ addEntryInput : TextField
+            ~ todayValue : Text
+            ~ trackerName : Text
+            ~ weekValue : Text
+            ~ yesterdayValue : Text
+            - errorDialogueCallback : Callback<String, Void>
+            - trackerCallback : Callback<Tracker, Void>
+            + setErrorDialogueCallback()
+            + setTrackerCallback()
+            ~ initialize()
+            ~ setSelectedTracker()
+            ~ updateOverview()
+            - addEntry()
+        }
+    }
+
+    ajour.fxgui.AjourApp -up-|> javafx.application.Application
+    ajour.fxgui.AjourAppController o-- ajour.fxgui.TrackerListViewController : listViewController
+    ajour.fxgui.LocalTrackerContainerAccess .up.|> ajour.fxgui.TrackerContainerAccess
+    ajour.fxgui.LocalTrackerContainerAccess o-- ajour.core.TrackerContainer : trackerContainer
+    ajour.fxgui.RemoteTrackerContainerAccess .up.|> ajour.fxgui.TrackerContainerAccess
+    ajour.fxgui.RemoteTrackerContainerAccess o-- ajour.core.TrackerContainer : trackerContainer
+    ajour.fxgui.TrackerGraphController o-- ajour.core.Tracker : selectedTracker
+    ajour.fxgui.TrackerListViewController o-- ajour.fxgui.TrackerGraphController : graphController
+    ajour.fxgui.TrackerListViewController o-- ajour.fxgui.TrackerOverviewController : overviewController
+    ajour.fxgui.TrackerListViewController o-- ajour.fxgui.TrackerContainerAccess : trackerContainerAccess
+    ajour.fxgui.TrackerOverviewController o-- ajour.core.Tracker : selectedTracker
+    ajour.fxgui.TrackerOverviewController o-- ajour.core.TrackerListener : trackerListener
+
+}
+
+
+@enduml
