@@ -58,6 +58,14 @@ I [MockupPics](documentation/mockupPics) er det bilder som illustrerer hvordan v
  at appen skulle se ut når den ble ferdig. 
 Forandringer fra prosjektets orginale planer har blitt logget i [changelog](documentation/changelog.md).
 
-Under vises et eksempelbilde på hvordan appen ser ut når bruker har valgt ''Snus'': 
+Under vises et eksempelbilde på hvordan appen skal se ut når bruker har valgt ''Snus'': 
 
 ![Eksempelbilde Snnus](documentation/mockupPics/snusOpening.png)
+
+<br/><br/>
+
+# Ferdig produkt 
+
+Under ser man hvordan appen endte opp med 'søvn' valgt som et eksempel på tracking element.
+
+![Eksempelbilde Snnus](documentation/ajourfinished.jpg)
